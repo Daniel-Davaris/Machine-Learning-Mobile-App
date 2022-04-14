@@ -14,15 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ListViewActionBarMenuApp">
         <activity
+            android:name=".EditResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".MLKitActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".EventActivity"
+            android:name=".AnalysedImageListItemActivity"
             android:exported="false"
-            android:parentActivityName=".ListViewActivity" />
+            android:parentActivityName=".AnalysedImageListViewActivity" />
         <activity
-            android:name=".ListViewActivity"
+            android:name=".AnalysedImageListViewActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity

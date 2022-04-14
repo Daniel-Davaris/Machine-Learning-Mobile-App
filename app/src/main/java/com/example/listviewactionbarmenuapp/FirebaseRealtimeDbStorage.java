@@ -1,17 +1,8 @@
 package com.example.listviewactionbarmenuapp;
 
-import static android.provider.Settings.System.getString;
-
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.util.TypedValue;
-import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,38 +21,34 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.UUID;
-
-import javax.sql.DataSource;
 
 public class FirebaseRealtimeDbStorage {
     String reference = "mobiletech";
     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(reference);
     StorageReference storageRef = FirebaseStorage.getInstance().getReference(reference);
 
-    public void uploadDataToRealtimeDatabase(CanberraEvent cbrEvent) {
+    public void uploadDataToRealtimeDatabase(AnalysedImage cbrEvent) {
         String key = dbRef.push().getKey();
         dbRef.child(key).child("title").setValue(cbrEvent.getTitle());
         dbRef.child(key).child("imageResource").setValue(cbrEvent.getImageResource());
-        dbRef.child(key).child("dates").setValue(cbrEvent.getDates());
+       /* dbRef.child(key).child("dates").setValue(cbrEvent.getDates());*/
     }
 
-    public void downloadDataFromRealtimeDB(ArrayAdapter<CanberraEvent> adapter) {
+    public void downloadDataFromRealtimeDB(ArrayAdapter<AnalysedImage> adapter) {
         dbRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String s) {
-                if(!snapshot.hasChildren() || snapshot.child("imageResource").getValue() == null) return;
-                CanberraEvent cbrEvent = new CanberraEvent(
+                /*if(!snapshot.hasChildren() || snapshot.child("imageResource").getValue() == null) return;
+                AnalysedImage cbrEvent = new AnalysedImage(
+
                         (String) snapshot.child("title").getValue(),
                         Integer.parseInt(snapshot.child("imageResource").getValue().toString()),
                         (String) snapshot.child("dates").getValue()
+
                 );
-                adapter.add(cbrEvent);
+                adapter.add(cbrEvent);*/
             }
 
             @Override

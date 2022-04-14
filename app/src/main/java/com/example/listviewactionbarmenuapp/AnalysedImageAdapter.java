@@ -11,13 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 // comment added for test commit
-public class CanberraEventAdapter extends ArrayAdapter<CanberraEvent> {
-    ArrayList<CanberraEvent> events;
-    public CanberraEventAdapter(Context context, int resource, ArrayList<CanberraEvent> objects) {
+public class AnalysedImageAdapter extends ArrayAdapter<AnalysedImage> {
+    ArrayList<AnalysedImage> events;
+    public AnalysedImageAdapter(Context context, int resource, ArrayList<AnalysedImage> objects) {
         super(context, resource, objects);
         events = objects;
     }
@@ -34,16 +32,16 @@ public class CanberraEventAdapter extends ArrayAdapter<CanberraEvent> {
             convertView.setBackgroundColor(Color.parseColor("#e6e6e6"));
         }
 
-        CanberraEvent event = events.get(position);
+        AnalysedImage event = events.get(position);
 
-        ImageView icon = (ImageView) convertView.findViewById(R.id.imageViewIcon);
-        icon.setImageResource(event.getImageResource());
+        /*ImageView icon = (ImageView) convertView.findViewById(R.id.imageViewIcon);
+        icon.setImageResource(event.getImageResource());*/
 
         TextView textViewTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
         textViewTitle.setText(event.getTitle());
 
-        TextView textViewDates = (TextView) convertView.findViewById(R.id.textViewDates);
-        textViewDates.setText(event.getDates());
+       /* TextView textViewDates = (TextView) convertView.findViewById(R.id.textViewDates);
+        textViewDates.setText(event.getDates());*/
 
         return convertView;
     }

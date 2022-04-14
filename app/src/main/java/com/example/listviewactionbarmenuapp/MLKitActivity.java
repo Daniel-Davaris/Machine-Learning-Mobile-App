@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.base.MoreObjects;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -56,6 +57,7 @@ public class MLKitActivity extends AppCompatActivity {
     private TextView textViewOutput;
     private Button editButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,9 @@ public class MLKitActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageViewMLKit);
         textViewOutput = findViewById(R.id.textViewMLKit);
         textViewTitle = findViewById(R.id.textViewTitleMLKit);
+
+        //Button btn = findViewById(R.id.buttonCamera);
+        //btn.setVisibility(View.INVISIBLE);
     }
 
     public void openCamera(View view) {
@@ -120,11 +125,25 @@ public class MLKitActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        // Call barcode reader method
+
+                        Bundle extras = getIntent().getExtras();
+                        String type = extras.getString("type");
+                        textViewTitle.setText(type);
+                        setTitle(type);
                         if (image != null) {
-                            //runBarcodeReader(image);
-                            //runTextReader(image);
-                            runImageContentReader(image);
+                            if(type.equals("first")) {
+                                runBarcodeReader(image);
+                            } else if (type.equals("second")){
+                                runImageContentReader(image);
+                            } else if (type.equals("third")){
+                                runTextReader(image);
+                            }
+
+
+
+
+                           // Button btn = findViewById(R.id.buttonCamera);
+                           // btn.setVisibility(View.VISIBLE);
                         }
                     }
                 }
