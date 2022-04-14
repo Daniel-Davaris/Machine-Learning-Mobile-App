@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-
+// comment added for test commit
 public class CanberraEventAdapter extends ArrayAdapter<CanberraEvent> {
     ArrayList<CanberraEvent> events;
     public CanberraEventAdapter(Context context, int resource, ArrayList<CanberraEvent> objects) {
