@@ -63,12 +63,28 @@ public class MLKitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mlkit);
 
+
         imageView = findViewById(R.id.imageViewMLKit);
         textViewOutput = findViewById(R.id.textViewMLKit);
         textViewTitle = findViewById(R.id.textViewTitleMLKit);
 
-        //Button btn = findViewById(R.id.buttonCamera);
-        //btn.setVisibility(View.INVISIBLE);
+        Bundle extras = getIntent().getExtras();
+        String type = extras.getString("type");
+
+
+        if(type.equals("first")) {
+            imageView.setImageResource(R.drawable.barcode);
+            setTitle("Barcode reader");
+        } else if (type.equals("second")){
+            imageView.setImageResource(R.drawable.content);
+            setTitle("Image Content Reader");
+        } else if (type.equals("third")){
+            imageView.setImageResource(R.drawable.text);
+            setTitle("Text Reader");
+        }
+
+        Button btn = findViewById(R.id.button2);
+        btn.setVisibility(View.INVISIBLE);
     }
 
     public void openCamera(View view) {
@@ -117,7 +133,18 @@ public class MLKitActivity extends AppCompatActivity {
                         imageView.setImageURI(imageFileUri);
                         // Prepare to show ML kit results
                         textViewOutput.setText("");
-                        textViewTitle.setText("ML Kit Results");
+
+                        Bundle extras = getIntent().getExtras();
+                        String type = extras.getString("type");
+
+                        if(type.equals("first")) {
+                            textViewTitle.setText("Barcode content");
+                        } else if (type.equals("second")){
+                            textViewTitle.setText("Image content");
+                        } else if (type.equals("third")){
+                            textViewTitle.setText("Detected text");
+                        }
+
                         // Create an InputImage object for ML kit
                         InputImage image = null;
                         try {
@@ -126,10 +153,8 @@ public class MLKitActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        Bundle extras = getIntent().getExtras();
-                        String type = extras.getString("type");
-                        textViewTitle.setText(type);
-                        setTitle(type);
+
+
                         if (image != null) {
                             if(type.equals("first")) {
                                 runBarcodeReader(image);
@@ -139,11 +164,8 @@ public class MLKitActivity extends AppCompatActivity {
                                 runTextReader(image);
                             }
 
-
-
-
-                           // Button btn = findViewById(R.id.buttonCamera);
-                           // btn.setVisibility(View.VISIBLE);
+                            Button btn = findViewById(R.id.button2);
+                            btn.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -161,14 +183,14 @@ public class MLKitActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(List<Barcode> barcodes) {
                         // Task completed successfully
-                        textViewOutput.append("Detected barcode: \n");
+                       // textViewOutput.append("Detected barcode: \n");
                         String result = null;
                         for (Barcode barcode : barcodes) {
                             result = barcode.getRawValue();
-                            textViewOutput.append("  " + result + "\n");
+                            textViewOutput.append(result + "\n");
                         }
                         if (result == null) {
-                            textViewOutput.append("  No barcode found\n");
+                            textViewOutput.append("No barcode found\n");
                         }
                     }
 
@@ -191,9 +213,9 @@ public class MLKitActivity extends AppCompatActivity {
                                 // Task completed successfully
                                 String result = visionText.getText();
                                 if (result.length() > 0)
-                                    textViewOutput.append("Detected text:\n  " + result + "\n");
+                                    textViewOutput.append(result + "\n");
                                 else {
-                                    textViewOutput.append("Detected text:\n  No text found.\n");
+                                    textViewOutput.append("No text found.\n");
                                 }
                             }
 
@@ -217,7 +239,7 @@ public class MLKitActivity extends AppCompatActivity {
                         new OnSuccessListener<List<ImageLabel>>() {
                             @Override
                             public void onSuccess(List<ImageLabel> labels) {
-                                textViewOutput.append("Detected image objects: \n");
+                               // textViewOutput.append("Detected image objects: \n");
                                 String result = null;
                                 int counter = 0;
                                 for (ImageLabel label : labels) {
@@ -228,7 +250,7 @@ public class MLKitActivity extends AppCompatActivity {
                                     counter++;
                                 }
                                 if (result == null) {
-                                    textViewOutput.append("  No image objects found\n");
+                                    textViewOutput.append("No image objects found\n");
                                 }
                             }
                         })
@@ -238,5 +260,10 @@ public class MLKitActivity extends AppCompatActivity {
                         textViewOutput.setText("Failed");
                     }
                 });
+    }
+    public void startEdit(View view) {
+        Intent intent = new Intent(this, EditResultActivity.class);
+       // intent.putExtra("type","third");
+        startActivity(intent);
     }
 }
