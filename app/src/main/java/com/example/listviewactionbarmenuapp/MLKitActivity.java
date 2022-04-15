@@ -262,8 +262,16 @@ public class MLKitActivity extends AppCompatActivity {
                 });
     }
     public void startEdit(View view) {
+        Bundle extras = getIntent().getExtras();
+        String type = extras.getString("type");
+
         Intent intent = new Intent(this, EditResultActivity.class);
-       // intent.putExtra("type","third");
+
+
+        intent.putExtra("imageFileUri",imageFileUri.toString());
+        intent.putExtra("textViewOutput",textViewOutput.getText().toString());
+        intent.putExtra("textViewTitle", textViewTitle.getText().toString());
+        intent.putExtra("type",type);
         startActivity(intent);
     }
 }
